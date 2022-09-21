@@ -37,7 +37,7 @@ const Register = () => {
         e.preventDefault();
         try {
             const response = await client.createIfNotExists(doc)
-            navigate('/login')
+            navigate('/login', {replace: true})
 
         } catch (error) {
             console.log(error);

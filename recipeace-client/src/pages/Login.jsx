@@ -35,21 +35,20 @@ const Login = () => {
             .then(res => res.json())
             .then(data => {
                 console.log(data.result)
-                const user = data.result.filter((a) => {
+                const user = data.result.find((a) => {
                     if(formData.email === a.email && formData.password == a.password){
-                        return a;
-                    }
-                })
-                if(!user) {
-                    toast.error("Incorrect email and/or password")
-                    navigate('/login')
-                } else {
+                        return a;     
+                }})
+
+                if(user) {
                     localStorage.setItem('user', JSON.stringify(user))
                     navigate('/dashboard')
                     console.log(user)
-                }
+                } else {
+                        toast.error("Incorrect email and/or password")
+                        setFormData({email: '', password:''})
+                    }
             })    
-            setFormData(" ");
     }
 
     return (
