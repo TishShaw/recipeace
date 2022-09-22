@@ -12,10 +12,6 @@ export const UserProvider = ({ children }) => {
 
     const [userDetails, setUserDetails] = useState(user);
 
-
-
-    console.log(userDetails);
-
     return (
         <UserContext.Provider value={{userDetails}}>
             {children}

@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import {AiFillPlusCircle} from 'react-icons/ai';
 import {BsSearch} from 'react-icons/bs';
 import { UserContext } from '../UserContext';
@@ -7,7 +7,18 @@ import CardList from '../components/elements/CardList';
 
 const Dashboard = () => {
     const { userDetails } = useContext(UserContext);
-    console.log(userDetails);
+    
+    function windowLoad () {
+        if(window.location.hash === "") {
+            window.location += '#loaded';
+            window.location.reload();
+        }
+    }
+    
+    useEffect(() => {
+        windowLoad()
+    }, [])
+
     return (
         <div className='w-full h-full p-6'>
             <div className="top ">

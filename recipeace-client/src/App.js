@@ -6,6 +6,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import { ToastContainer } from 'react-toastify';
 import { UserProvider } from './UserContext';
+import Settings from './pages/Settings';
+import UserProfile from './pages/UserProfile';
+import Nav from './components/Nav';
 
 const App = () => {
 	return (
@@ -15,7 +18,10 @@ const App = () => {
 				<Route path='/register' element={<Register />} />
 				<Route path='/' element={<Home />} />
 				<Route path='/dashboard' element={<Dashboard />} />
+				<Route path='/profile' element={<UserProfile />} />
+				<Route path='/settings' element={<Settings />} />
 			</Routes>
+
 			<ToastContainer
 				position='bottom-right'
 				autoClose={3000}
@@ -25,6 +31,12 @@ const App = () => {
 				rtl={false}
 				pauseOnFocusLoss
 			/>
+
+			{
+			window.location.pathname !== '/login' && window.location.pathname !== '/' ? <div className='md:hidden'>
+				<Nav />
+			</div> : ''
+			}
 		</UserProvider>
 	);
 };

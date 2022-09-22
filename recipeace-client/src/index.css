@@ -13,3 +13,7 @@ body {
 input:focus {
     outline: none;
 }
+
+Link {
+    cursor: pointer;
+}
