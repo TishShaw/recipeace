@@ -2,9 +2,14 @@ import { Link } from 'react-router-dom';
 import {useState} from 'react';
 import {GoThreeBars} from 'react-icons/go';
 import {AiOutlineClose} from 'react-icons/ai';
+import AddRecipe from './AddRecipe';
 
 const Nav = () => {
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(false);
+    const [openModal, setModalOpen] = useState(false);
+
+    const handleModalOpen = () => setModalOpen(true);
+    const handleModalClose = () => setModalOpen(false);
 
     const handleTab = (e) => {
         e.preventDefault();
@@ -62,9 +67,16 @@ const Nav = () => {
                             <li className='mx-2' id="tab">About Us</li>
                             <li className='mx-2' id="tab">Contact Us</li>
                 </ul>
-                <button className='bg-black rounded p-2 text-gold text-[16px] lg:text-[18px]'>Add Recipe</button>
-            </div> 
+                <div className="">
+                    <button className='bg-black rounded p-2 text-gold text-[16px] lg:text-[18px]' onClick={handleModalOpen}>Add Recipe</button>
 
+                    {
+                        openModal ?
+                        <AddRecipe handleModalClose={handleModalClose}/>:null
+                    }
+                
+                </div>
+            </div> 
         </div>
     );
 };
