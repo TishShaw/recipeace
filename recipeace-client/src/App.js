@@ -13,17 +13,16 @@ import Nav from './components/Nav';
 const App = () => {
 	return (
 		<UserProvider>
-		{window.location.pathname !== '/login' &&
+			{window.location.pathname !== '/login' &&
 			window.location.pathname !== '/' ? (
 				<Nav />
-			) : (
-				null
-			)}
+			) : null}
 			<Routes>
 				<Route path='/login' element={<Login />} />
 				<Route path='/register' element={<Register />} />
 				<Route path='/' element={<Home />} />
 				<Route path='/dashboard' element={<Dashboard />} />
+				<Route path='/recipe-details/:id' element={<Dashboard />} />
 				<Route path='/profile/:id' element={<UserProfile />} />
 				<Route path='/settings' element={<Settings />} />
 			</Routes>

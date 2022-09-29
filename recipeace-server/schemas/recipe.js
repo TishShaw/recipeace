@@ -16,16 +16,23 @@ export default {
 		{
 			name: 'image',
 			title: 'Image',
-			type: 'image',
-			options: {
-				hotspot: true,
-			},
+			type: 'string',
+		},
+		{
+			name: 'calories',
+			title: 'Calories',
+			type: 'number',
+		},
+		{
+			name: 'servings',
+			title: 'Servings',
+			type: 'number',
 		},
 		{
 			name: 'ingredients',
 			title: 'Ingredients',
 			type: 'array',
-			of:[{ type: 'ingredient' }],
+			of: [{ type: 'ingredient' }],
 		},
 		{
 			name: 'instructions',
