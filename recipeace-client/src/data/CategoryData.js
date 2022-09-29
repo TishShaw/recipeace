@@ -1,7 +1,28 @@
 import { FaHome, FaSearch, FaUser } from 'react-icons/fa';
 import { IoMdSettings } from 'react-icons/io';
 
-export const cat = ['Breakfast', 'Lunch', 'Dinner', 'Drinks', 'Deserts'];
+export const cat = [
+	{
+		name: 'Breakfast',
+		image: '',
+	},
+	{
+		name: 'Lunch',
+		image: '',
+	},
+	{
+		name: 'Dinner',
+		image: '',
+	},
+	{
+		name: 'Drinks',
+		image: '',
+	},
+	{
+		name: 'deserts',
+		image: '',
+	},
+];
 
 export const recipeCardData = [
 	{
@@ -42,14 +63,17 @@ export const navItems = [
 	{
 		route: '/dashboard',
 		title: <FaHome />,
+		text: 'Home',
 	},
 	{
 		route: '/dashboard',
 		title: <FaSearch />,
+		text: 'Search',
 	},
 	{
-		route: '/profile',
+		route: '/profile/:id',
 		title: <FaUser />,
+		text: <img src='' />,
 	},
 	{
 		route: '/settings',
