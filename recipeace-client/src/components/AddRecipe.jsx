@@ -5,7 +5,7 @@ function AddRecipe({handleModalClose}) {
     return (
         <div className='h-full'>
             <div className='bg-black/70 fixed w-full h-screen z-10 top-0 left-0'></div>
-            <div className='rounded-md bg-white absolute left-0 right-0 ml-auto mr-auto w-[600px] h-[700px] z-10'>
+            <div className='rounded-md bg-white absolute left-0 right-0 ml-auto mr-auto md:w-[600px] h-[700px] sm:w-full z-10'>
                 <RiCloseCircleLine onClick={handleModalClose} className='w-full text-red-800 text-xl right-0 mt-4 cursor-pointer'/>
                 <div className="h-full p-6">
                     <h1 className='font-bold text-2xl mb-2'>Add Recipe</h1>
