@@ -7,7 +7,7 @@ const Home = () => {
             <div className='home-container top-0 bottom-0 h-full'>
 
                 {/* Mobile devices */}
-                <div className="sm:hidden">
+                <div className="md:hidden">
                     <div className='relative'>
                         {/* Overlay */}
                         <div className='absolute w-full h-full text-gray-200  bg-black/30 flex flex-col justify-center'>
@@ -30,8 +30,8 @@ const Home = () => {
                 </div>
 
                 {/* Desktop */}
-                <div className="hidden sm:block">
-                    <div className="flex">
+                <div className="sm:hidden md:flex">
+                    <div className="md:flex">
                         <div>
                             <img src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2210&q=80" className="h-[100vh] w-[650px]"/>
                         </div>

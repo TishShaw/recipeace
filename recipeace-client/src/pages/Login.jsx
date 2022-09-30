@@ -24,6 +24,7 @@ const Login = () => {
     }
 
     let QUERY = encodeURIComponent(`*[_type == "user"]{email, password, userName, image, _id}`)
+    
     let URL =`https://${process.env.REACT_APP_SANITY_PROJECT_ID}.api.sanity.io/v2022-09-20/data/query/production?query=${QUERY}`
 
     const onSubmit = async(e) => {
@@ -34,7 +35,6 @@ const Login = () => {
             })
             .then(res => res.json())
             .then(data => {
-                console.log(data.result)
                 const user = data.result.find((a) => {
                     if(formData.email === a.email && formData.password == a.password){
                         return a;     
@@ -43,7 +43,6 @@ const Login = () => {
                 if(user) {
                     localStorage.setItem('user', JSON.stringify(user))
                     navigate('/dashboard')
-                    console.log(user)
                 } else {
                         toast.error("Incorrect email and/or password")
                         setFormData({email: '', password:''})
