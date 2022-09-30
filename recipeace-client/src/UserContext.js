@@ -4,11 +4,10 @@ export const UserContext = createContext(null);
 
 export const UserProvider = ({ children }) => {
         const user = JSON.parse(localStorage.getItem('user'));
-
-		console.log(user);
+        
 		useEffect(() => {
 			setUserDetails(user);
-		}, []);
+		}, [user]);
 
     const [userDetails, setUserDetails] = useState(user);
 
