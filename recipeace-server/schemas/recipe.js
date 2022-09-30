@@ -16,7 +16,10 @@ export default {
 		{
 			name: 'image',
 			title: 'Image',
-			type: 'string',
+			type: 'image',
+			options: {
+				hotspot: true,
+			},
 		},
 		{
 			name: 'calories',
@@ -32,7 +35,7 @@ export default {
 			name: 'ingredients',
 			title: 'Ingredients',
 			type: 'array',
-			of: [{ type: 'ingredient' }],
+			of: [{ type: 'string' }],
 		},
 		{
 			name: 'instructions',

@@ -8,17 +8,9 @@ import recipe from './recipe';
 import comment from './comment';
 import save from './save';
 import postedBy from './postedBy';
-import ingredient from './ingredient';
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
 	name: 'default',
-	types: schemaTypes.concat([
-		user,
-		recipe,
-		postedBy,
-		save,
-		comment,
-		ingredient,
-	]),
+	types: schemaTypes.concat([user, recipe, postedBy, save, comment]),
 });
