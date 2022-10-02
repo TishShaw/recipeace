@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import Masonry from 'react-masonry-css';
 import Recipe from './Recipe';
 import Spinner from './Spinner';
@@ -13,9 +12,10 @@ const breakpointsObj = {
 
 function MasonryLayout({recipes}) {
     
-
+    if(!recipes) {
+        return <Spinner message="Loading recipes..."/>
+    }
     return (
-       
         <Masonry className='flex animate-slide-fwd' breakpointCols={breakpointsObj}>
             {recipes?.map((recipe) => <Recipe key={recipe._id} recipe={recipe} className='w-max' />)}
                 {

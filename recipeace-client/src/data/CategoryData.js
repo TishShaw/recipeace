@@ -1,3 +1,5 @@
+import {client} from '../client';
+
 export const cat = ['Breakfast','Lunch', 'Dinner', 'Drinks', 'Deserts'];
 
 export const recipeCardData = [
@@ -34,3 +36,8 @@ export const recipeCardData = [
 			'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=386&q=80',
 	},
 ];
+
+export const handleDelete = async (id) => {
+	await client.delete(`${id}`).catch((error) => console.error(error));
+	window.location.reload();
+};

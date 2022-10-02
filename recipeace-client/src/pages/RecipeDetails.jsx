@@ -12,7 +12,7 @@ import {FiClock} from 'react-icons/fi';
 import {BsTrash} from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid';
 
-function RecipeDetails(props) {
+function RecipeDetails() {
     const { userDetails } = useContext(UserContext);
 
     const [recipeDetails, setRecipeDetails] = useState(null);
@@ -28,7 +28,6 @@ function RecipeDetails(props) {
             client.fetch(query)
                 .then((data) => {
                     setRecipeDetails(data[0])
-                    console.log(recipeDetails)
                 })
         }
     }
@@ -37,22 +36,19 @@ function RecipeDetails(props) {
 
     useEffect(() => {
         try {
-            setIngredients(recipeDetails?.ingredients[0].split(","))
-            setInstructions(recipeDetails?.instructions[0].split(","))
-            console.log(ingredients);
-            console.log(instructions);
+            setIngredients(recipeDetails?.ingredients[0]?.split(","))
+            setInstructions(recipeDetails?.instructions[0]?.split(","))
         } catch (error) {
-            
+            return
         }
     }, [recipeDetails])
-    
 
     const addComment = () => {
         if(comment) {
             client
                 .patch(recipeId)
                 .setIfMissing({ comments: []})
-                .insert('after', 'comments[-1]', [{
+                .insert('before', 'comments[0]', [{
                     comment,
                     _key: uuidv4(),
                     postedBy: {
@@ -62,10 +58,35 @@ function RecipeDetails(props) {
                 }])
                 .commit()
                 .then(() => {
-                    fetchRecipeDetails();
+                    fetchRecipeDetails(recipeId);
                     setComment('');
                     window.location.reload()
                 })
+        }
+    }
+
+    const handleUpdate = async (id) => {
+        try {
+            let res = await client
+                    .patch(recipeId)
+                    .createOrReplace([`comments[_key=="${id}"]`])
+                    .commit()
+            setRecipeDetails(res)
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
+
+    const handleDelete = async (id) => {
+        try {
+            let res = await client
+                    .patch(recipeId)
+                    .unset([`comments[_key=="${id}"]`])
+                    .commit()
+            setRecipeDetails(res)
+        } catch (error) {
+            console.log(error.message);
         }
     }
 
@@ -92,51 +113,64 @@ function RecipeDetails(props) {
                 <div className="h-20 p-6 flex justify-center items-center shadow-xl">
                     <p className="flex items-center text-l mr-4 border p-2 rounded-lg shadow"><HiOutlineUsers/>{recipeDetails?.servings} Servings</p>
                     <p className="flex items-center text-l mr-4 border p-2 rounded-lg shadow"><ImSpoonKnife/>{recipeDetails?.calories} Calories</p>
+                    <p className="flex items-center text-l mr-4 border p-2 rounded-lg shadow"><FiClock/>{recipeDetails?.cookTime} Minutes</p>
                     <p className="flex items-center text-l mr-4 border p-2 rounded-lg shadow"><FiBookmark/> Save</p>
                 </div>
                 <div className="mt-6">
                     <h1 className="text-xl font-semibold mb-4">Ingredients</h1>
-                    {ingredients?.map((i) => (
-                        <li key={i.key} className="mb-2">{i}</li>
-                    ))} 
+                        {ingredients?
+                            ingredients?.map((i, index) => (
+                                <ul key={index}>
+                                    <li className="mb-4 w-[440px]">{i}</li>
+                                </ul>
+                            )):
+                            recipeDetails?.ingredients?.map((i) => (
+                                <ul key={i.ingredient}>
+                                    <li  className="mb-4 w-[440px]">{i.ingredient}</li>
+                                </ul>
+                            ))
+                        }
                 </div>
                 <div className="mt-6">
                     <h1 className="text-xl font-semibold mb-4">Instructions</h1>
                     {
                         instructions?
                         instructions?.map((i) => (
-                        <ol key={i.key}>
+                        <ul key={i._id}>
                             <li className="mb-4">{i}</li>
-                        </ol>
+                        </ul>
                     ))
                     :
-                    recipeDetails?.instructions?.map((i) => (
-                        <ol key={i.key}>
+                    recipeDetails?.instructions?.map((i, index) => (
+                        <ul key={index}>
                             <li className="mb-4">{i}</li>
-                        </ol>
+                        </ul>
                     ))}
                 </div>
-                 <div className="p-12 mt-20">
+                <div className="mt-20">
                     <h1 className="font-semibold text-2xl ">Comments ({recipeDetails?.comments?.length > 0 ? recipeDetails?.comments?.length : 0})</h1>
-                    <input type='text' placeholder='Add a comment' className='mt-4 border rounded w-[600px] p-2' value={comment} onChange={(e) => setComment(e.target.value)}/>
+                    <input type='text' placeholder='Add a comment' className='mt-4 border rounded w-[250px] p-2' value={comment} onChange={(e) => setComment(e.target.value)}/>
                     <button onClick={addComment} type="button" className='bg-black text-white p-2 ml-2 rounded-lg'>Send</button>
+                    
                 </div>
+                <hr className='mt-8'/>
                 <div className="">
                     {recipeDetails?.comments?.map((item) => (
-                        <div className="flex gap-6 pl-10 mb-10 items-center bg-white rounded-lg w-full" key={item.comment}>
-                        <img
-                            src={item.postedBy?.image}
-                            className="h-12 rounded-full cursor-pointer"
-                            alt=""
-                        />
-                        <div className="flex flex-col">
-                            <p className="font-bold">{item.postedBy?.userName}</p>
-                            <p className='w-[500px]'>{item.comment}</p>
-                        </div>
-                        <div className="">
-                            {item.postedBy?.userName === userDetails.userName  && <BsTrash/>}
-                        </div>
-                        
+                        <div className="flex mt-10 mb-10 items-center bg-white rounded-lg w-full" key={item._key}>
+                            <div className='flex justify-center'>
+                                <img
+                                    src={item.postedBy?.image}
+                                    className="h-12 rounded-full cursor-pointer"
+                                    alt=""
+                                />
+                                <div className="flex flex-col ml-4">
+                                    <p className="font-bold  ">{item.postedBy?.userName}</p>
+                                    <p className='w-[200px]'>{item.comment}</p>
+                                </div>
+                            </div>
+                            <div className="">
+                                {item.postedBy?.userName === userDetails.userName  && <BsTrash/>}
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -159,7 +193,7 @@ function RecipeDetails(props) {
                             <span className="flex items-center mr-10">
                                 <HiOutlineUsers className="mr-2 flex items-center text-xl"/> {recipeDetails?.servings} Servings</span>
                             <span className="flex items-center mr-10">
-                                <FiClock className="mr-2 flex items-center text-xl"/> {recipeDetails?.servings} Servings</span>
+                                <FiClock className="mr-2 flex items-center text-xl"/> {recipeDetails?.cookTime} Minutes</span>
                             <span className="flex items-center mr-10">
                                 <FiBookmark className="mr-2 flex items-center text-xl"/> Save</span>
                         </div>
@@ -171,27 +205,27 @@ function RecipeDetails(props) {
                     <h1 className="text-2xl font-semibold mb-4">Instructions</h1>
                         {
                             instructions? 
-                            instructions?.map((i) => (
-                            <ol key={i.key}>
+                            instructions?.map((i, idx) => (
+                            <ul key={idx}>
                                 <li className="mb-4">{i}</li>
-                            </ol>
+                            </ul>
                         )):
-                            recipeDetails?.instructions?.map((i) => (
-                            <ol key={i.key}>
+                            recipeDetails?.instructions?.map((i, idx) => (
+                            <ul key={idx}>
                                 <li className="mb-4">{i}</li>
-                            </ol>
+                            </ul>
                         ))}
                     </div>
                     <div className=" flex-3 pl-6 pr-10">
                             <h1 className="text-2xl font-semibold mb-4">Ingredients</h1>
                         {ingredients?
-                            ingredients?.map((i) => (
-                                <ul key={i.key}>
+                            ingredients?.map((i, index) => (
+                                <ul key={index}>
                                     <li className="mb-4 w-[440px]">{i}</li>
                                 </ul>
                             )):
-                            recipeDetails?.ingredients?.map((i) => (
-                                <ul key={i.key}>
+                            recipeDetails?.ingredients?.map((i, index) => (
+                                <ul key={i.ingredient}>
                                     <li  className="mb-4 w-[440px]">{i.ingredient}</li>
                                 </ul>
                             ))
@@ -205,20 +239,28 @@ function RecipeDetails(props) {
                 </div>
                 <div className="">
                     {recipeDetails?.comments?.map((item) => (
-                        <div className="flex gap-6 pl-10 mb-10 items-center bg-white rounded-lg w-full" key={item.comment}>
-                        <img
-                            src={item.postedBy?.image}
-                            className="h-12 rounded-full cursor-pointer"
-                            alt=""
-                        />
-                        <div className="flex flex-col">
-                            <p className="font-bold">{item.postedBy?.userName}</p>
-                            <p className='w-[500px]'>{item.comment}</p>
-                        </div>
-                        <div className="">
-                            {item.postedBy?.userName === userDetails.userName  && <BsTrash/>}
-                        </div>
-                        
+                        <div className="flex gap-6 pl-10 mb-10 items-center bg-white rounded-lg w-full" key={item._key}>
+                            <img
+                                src={item.postedBy?.image}
+                                className="h-12 rounded-full cursor-pointer"
+                                alt=""
+                            />
+                            <div className="flex flex-col">
+                                <p className="font-bold">{item.postedBy?.userName}</p>
+                                <p className='w-[500px]'>{item.comment}</p>
+                            </div>
+                            {
+                                item.postedBy?.userName === userDetails.userName &&
+                                    <div className="flex items-center cursor-pointer">
+                                        <div onClick={() => {
+
+                                        handleDelete(item._key) }}>
+                                            <BsTrash />
+                                        </div>
+
+                                        <span onClick={() => handleUpdate(item._key)} className="ml-2">edit</span>
+                                    </div>
+                            }
                         </div>
                     ))}
                 </div>

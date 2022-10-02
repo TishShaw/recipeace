@@ -5,11 +5,17 @@ import {FiBookmark} from 'react-icons/fi';
 import {BsFillBookmarkFill} from 'react-icons/bs';
 import { v4 as uuidv4} from 'uuid';
 import { client, urlFor } from '../client';
+import {ImCancelCircle} from 'react-icons/im';
 
-function Recipe({ recipe: {_id, title, calories, servings, postedBy, image, save, userName} }) {
+import {handleDelete} from '../data/CategoryData';
+
+function Recipe({ recipe }) {
     const navigate = useNavigate();
     const { userDetails } = useContext(UserContext);
     const [onHover, setOnHover] = useState(false);
+
+    const {_id, title, calories, servings, postedBy, image, save} = recipe;
+
     const alreadySaved = !!(save?.filter((item) => item.postedBy?.ref === userDetails._id))?.length;
 
     const saveRecipe = (id) => {
@@ -31,15 +37,14 @@ function Recipe({ recipe: {_id, title, calories, servings, postedBy, image, save
                 })
         }
     }
-
-
+    
     return (
         <div className='m-2   w-full flex justify-center items-center' 
             onMouseEnter={() => setOnHover(true)}
             onMouseLeave={() => setOnHover(false)}
             onClick={() => navigate(`/recipe-details/${_id}`)}>
                 <div className='border m-2 rounded-lg relative  hover:scale-105 sm:w-full'>
-                    <img src={(urlFor(image).width(250).url())} className='rounded-lg sm:w-full md:w-[300px]' alt="recipe_image"/>
+                    <img src={(urlFor(image).url())} className='rounded-lg sm:w-full w-[100px] md:w-[300px]' alt="recipe_image"/>
 
                     {alreadySaved? <BsFillBookmarkFill className='absolute top-0 right-0 m-2 text-2xl text-gray-700 cursor-pointer'/> : <FiBookmark className='absolute top-0 right-0 m-2 text-2xl text-gray-700 cursor-pointer' onClick={(e) => {
                         e.stopPropagation();
@@ -50,19 +55,26 @@ function Recipe({ recipe: {_id, title, calories, servings, postedBy, image, save
                         <div className=' absolute top-0 pt-2 flex' 
                             onClick={(e) => {
                                 e.stopPropagation();
-                            }}
-                            >
-                            <img src={postedBy?.image !== null ? postedBy?.image : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png' } alt="" className='w-[30px] h-[30px] rounded-full object-cover'/>
+                            }}>
+                            <img src={postedBy?.image !== null ? postedBy?.image : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png' } alt="user_image" className='w-[30px] h-[30px] rounded-full object-cover'/>
                             {
                                 onHover ? 
-                                <h2 className=' p-2 text-md text-gray-500'><Link to={`/profile/${postedBy?._id}`} 
-                                >{postedBy?.userName}</Link></h2> : ''
+                                    <h2 className=' p-2 text-md text-gray-500'><Link to={`/profile/${postedBy?._id}`} 
+                                    >{postedBy?.userName}</Link></h2> : ''
                             }
                             
                         </div>
                         <div className="py-4">
                             <div className="text-l top-0">{title}</div>
                             <span className="text-[#C1C1C1] text-l">{calories} calories | {servings} servings</span>
+                            { 
+                            userDetails._id === postedBy._id ?
+                                <span className="absolute bottom-50 right-2 hover:text-red-600 cursor-pointer" onClick={(e) => {
+                                        e.stopPropagation()
+                                        handleDelete(_id)
+                                    }}><ImCancelCircle/>
+                                </span> : ""
+                            }
                         </div>
                 </div>
             </div>
