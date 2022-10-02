@@ -15,7 +15,8 @@ const App = () => {
 	return (
 		<UserProvider>
 			{window.location.pathname !== '/login' &&
-			window.location.pathname !== '/' ?
+			window.location.pathname !== '/' && 
+			window.location.pathname !== '/register'?
 				<Nav />
 			: null}
 			<Routes>

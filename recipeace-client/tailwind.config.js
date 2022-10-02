@@ -7,10 +7,12 @@ module.exports = {
 				gold: '#BC9004',
 			},
 			screens: {
-				sm: '300px',
+				xs: '300px',
+				sm: '375px',
 				md: '700px',
-				lg: '900px',
-				xl: '1200px',
+				lg: '800px',
+				xl: '1000px',
+				xxl: '1200px'
 			},
 		},
 	},

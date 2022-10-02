@@ -47,7 +47,7 @@ const Nav = () => {
                                 {open && <div className='bg-black/70 fixed w-full h-screen z-10 top-[64px] left-0'></div>}
                                 <ul className={`right-0 bg-gold w-[300px] h-screen fixed mt-4 pr-6 pl-4 z-10 text-xl ease-in-out duration-300 ${open ? "translate-x-2": 'translate-x-full'}` }>
                                     <li className='my-10'><Link  to='/dashboard' onClick={() => setOpen(false)}>Home</Link></li>
-                                    <li className='my-10'><Link to={`/profile/${userDetails._id}`} onClick={() => setOpen(false)}>Profile</Link></li>
+                                    <li className='my-10'><Link to={`/profile/${userDetails?._id}`} onClick={() => setOpen(false)}>Profile</Link></li>
                                     <li className='my-10'><Link to='/about-us' onClick={() => setOpen(false)}>About Us</Link></li>
                                 </ul>
                             </div>
@@ -59,7 +59,7 @@ const Nav = () => {
                 <h1 className="text-2xl md:text-2xl lg:text-3xl">RECIPEACE</h1>
                 <ul className='flex text-[16px] lg:text-[18px]' onClick={handleTab}>
                     <li className='mx-2' id="tab"><Link to='/dashboard'>Home</Link></li>
-                    <li className='mx-2' id="tab"><Link to={`/profile/${userDetails._id}`}>Profile</Link></li>
+                    <li className='mx-2' id="tab"><Link to={`/profile/${userDetails?._id}`}>Profile</Link></li>
                     <li className='mx-2' id="tab"><Link to='/about-us'>About Us</Link></li>
                 </ul>
                 <div>

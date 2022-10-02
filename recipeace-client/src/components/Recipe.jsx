@@ -37,7 +37,7 @@ function Recipe({ recipe }) {
                 })
         }
     }
-    
+
     return (
         <div className='m-2   w-full flex justify-center items-center' 
             onMouseEnter={() => setOnHover(true)}
@@ -56,7 +56,7 @@ function Recipe({ recipe }) {
                             onClick={(e) => {
                                 e.stopPropagation();
                             }}>
-                            <img src={postedBy?.image !== null ? postedBy?.image : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png' } alt="user_image" className='w-[30px] h-[30px] rounded-full object-cover'/>
+                            <img src={(urlFor(recipe.postedBy.image).url())} alt="user_image" className='w-[30px] h-[30px] rounded-full object-cover'/>
                             {
                                 onHover ? 
                                     <h2 className=' p-2 text-md text-gray-500'><Link to={`/profile/${postedBy?._id}`} 
