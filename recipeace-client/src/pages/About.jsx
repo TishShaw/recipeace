@@ -1,5 +1,4 @@
 import React from 'react';
-import Peace from '../img/peace.png';
 const About = () => {
     return (
         <div className='w-full'>
