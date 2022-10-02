@@ -1,10 +1,13 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import {useState} from 'react';
 import {GoThreeBars} from 'react-icons/go';
 import {AiOutlineClose} from 'react-icons/ai';
 import AddRecipe from './AddRecipe';
+import { UserContext } from '../UserContext';
 
 const Nav = () => {
+    const { userDetails } = useContext(UserContext);
     const [open, setOpen] = useState(false);
     const [openModal, setModalOpen] = useState(false);
 
@@ -45,14 +48,12 @@ const Nav = () => {
                         </div>
                         
                         
-                        {open &&<div className=' '>
+                        {open && <div className=' duration-300'>
                             <div className='bg-black/70 fixed w-full h-screen z-10 top-[64px] left-0'></div>
-                            <ul className='right-0 bg-gold w-[300px] h-screen fixed mt-4 pr-6 pl-4 z-10 text-xl translate-x-2 duration-300'>
+                            <ul className='right-0 bg-gold w-[300px] h-screen fixed mt-4 pr-6 pl-4 z-10 text-xl translate-x-2'>
                                 <li className='my-10'><Link to='/dashboard'>Home</Link></li>
-                                <li className='my-10'><Link to='/profile/:id'>Profile</Link></li>
-                                <li className='my-10'><Link to='/settings'>Settings</Link></li>
+                                <li className='my-10'><Link to={`/profile/${userDetails._id}`}>Profile</Link></li>
                                 <li className='my-10'><Link to='/about-us'>About Us</Link></li>
-                                <li className='my-10'><Link to='/contact-us'>Contact Us</Link></li>
                             </ul>
                         </div>}                     
                     </div>  
@@ -62,10 +63,8 @@ const Nav = () => {
                 <h1 className="text-2xl md:text-2xl lg:text-3xl">RECIPEACE</h1>
                 <ul className='flex text-[16px] lg:text-[18px]' onClick={handleTab}>
                             <li className='mx-2' id="tab"><Link to='/dashboard'>Home</Link></li>
-                            <li className='mx-2' id="tab"><Link to='/profile/:id'>Profile</Link></li>
-                            <li className='mx-2' id="tab"><Link to='/settings'>Settings</Link></li>
+                            <li className='mx-2' id="tab"><Link to={`/profile/${userDetails._id}`}>Profile</Link></li>
                             <li className='mx-2' id="tab">About Us</li>
-                            <li className='mx-2' id="tab">Contact Us</li>
                 </ul>
                 <div className="">
                     <button className='bg-black rounded p-2 text-gold text-[16px] lg:text-[18px]' onClick={handleModalOpen}>Add Recipe</button>

@@ -6,7 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import { ToastContainer } from 'react-toastify';
 import { UserProvider } from './UserContext';
-import Settings from './pages/Settings';
+import About from './pages/About';
 import UserProfile from './pages/UserProfile';
 import Nav from './components/Nav';
 import RecipeDetails from './pages/RecipeDetails';
@@ -25,7 +25,7 @@ const App = () => {
 				<Route path='/dashboard' element={<Dashboard />} />
 				<Route path='/recipe-details/:id' element={<RecipeDetails />} />
 				<Route path='/profile/:id' element={<UserProfile />} />
-				<Route path='/settings' element={<Settings />} />
+				<Route path='/about-us' element={<About />} />
 			</Routes>
 
 			<ToastContainer
