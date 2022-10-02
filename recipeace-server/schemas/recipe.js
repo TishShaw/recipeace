@@ -48,6 +48,11 @@ export default {
 			],
 		},
 		{
+			name: 'cookTime',
+			title: 'CookTime',
+			type: 'string',
+		},
+		{
 			name: 'userID',
 			title: 'UserId',
 			type: 'string',
@@ -66,7 +71,7 @@ export default {
 		{
 			name: 'comments',
 			title: 'Comments',
-			type: 'array',
+			type: 'comment',
 			of: [{ type: 'comment' }],
 		},
 	],
