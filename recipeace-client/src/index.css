@@ -31,3 +31,8 @@ Link {
     border-bottom: 2px solid orange;
     transform: 5s;
 }
+
+.nav li :hover {
+    border-bottom: 2px solid orange;
+    width: auto;
+}

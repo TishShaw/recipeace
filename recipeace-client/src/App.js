@@ -10,6 +10,7 @@ import About from './pages/About';
 import UserProfile from './pages/UserProfile';
 import Nav from './components/Nav';
 import RecipeDetails from './pages/RecipeDetails';
+import AddRecipe from './components/AddRecipe';
 
 const App = () => {
 	return (
@@ -18,12 +19,13 @@ const App = () => {
 			window.location.pathname !== '/' && 
 			window.location.pathname !== '/register'?
 				<Nav />
-			: null}
+			: ''}
 			<Routes>
 				<Route path='/login' element={<Login />} />
 				<Route path='/register' element={<Register />} />
 				<Route path='/' element={<Home />} />
 				<Route path='/dashboard' element={<Dashboard />} />
+				<Route path='/add-recipe' element={<AddRecipe />} />
 				<Route path='/recipe-details/:id' element={<RecipeDetails />} />
 				<Route path='/profile/:id' element={<UserProfile />} />
 				<Route path='/about-us' element={<About />} />

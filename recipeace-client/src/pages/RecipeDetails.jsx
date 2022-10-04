@@ -31,17 +31,6 @@ function RecipeDetails() {
                 })
         }
     }
-    const [ingredients, setIngredients] = useState(null)
-    const [instructions, setInstructions] = useState(null)
-
-    useEffect(() => {
-        try {
-            setIngredients(recipeDetails?.ingredients[0]?.split(","))
-            setInstructions(recipeDetails?.instructions[0]?.split(","))
-        } catch (error) {
-            return
-        }
-    }, [recipeDetails])
 
     const addComment = () => {
         if(comment) {
@@ -53,6 +42,7 @@ function RecipeDetails() {
                     _key: uuidv4(),
                     postedBy: {
                         _type: 'postedBy',
+                        image: userDetails.image,
                         _ref: userDetails._id
                     }
                 }])
@@ -108,7 +98,7 @@ function RecipeDetails() {
                     <div className="absolute bg-white p-6 bottom-10 shadow">
                         <h1 className='text-xl font-bold'>{recipeDetails?.title}</h1>                   
                     </div>
-                    <Link to={`/profile/${recipeDetails?.postedBy._id}`}><img src={(recipeDetails?.postedBy && (recipeDetails.postedBy.image))} className=" absolute top-5 right-5 rounded-full w-[40px] h-[40px] object-cover" alt=""/></Link>
+                    <Link to={`/profile/${recipeDetails?.postedBy._id}`}><img src={(recipeDetails?.postedBy.image && urlFor(recipeDetails?.postedBy.image).url())} className=" absolute top-5 right-5 rounded-full w-[40px] h-[40px] object-cover" alt=""/></Link>
                 </div>
                 <div className="h-20 p-6 flex justify-center items-center shadow-xl">
                     <p className="flex items-center text-l mr-4 border p-2 rounded-lg shadow"><HiOutlineUsers/>{recipeDetails?.servings} Servings</p>
@@ -117,35 +107,23 @@ function RecipeDetails() {
                     <p className="flex items-center text-l mr-4 border p-2 rounded-lg shadow"><FiBookmark/> Save</p>
                 </div>
                 <div className="mt-6">
-                    <h1 className="text-xl font-semibold mb-4">Ingredients</h1>
-                        {ingredients?
-                            ingredients?.map((i, index) => (
+                    <h1 className="text-xl font-semibold mb-4 w-full">Ingredients</h1>
+                        {
+                            recipeDetails?.ingredients?.map((i, index) => (
                                 <ul key={index}>
-                                    <li className="mb-4 w-[440px]">{i}</li>
-                                </ul>
-                            )):
-                            recipeDetails?.ingredients?.map((i) => (
-                                <ul key={i.ingredient}>
-                                    <li  className="mb-4 w-[440px]">{i.ingredient}</li>
+                                    <li className="mb-4 w-full">{i}</li>
                                 </ul>
                             ))
                         }
                 </div>
-                <div className="mt-6">
+                <div className="mt-6 w-full">
                     <h1 className="text-xl font-semibold mb-4">Instructions</h1>
                     {
-                        instructions?
-                        instructions?.map((i) => (
-                        <ul key={i._id}>
-                            <li className="mb-4">{i}</li>
-                        </ul>
-                    ))
-                    :
-                    recipeDetails?.instructions?.map((i, index) => (
-                        <ul key={index}>
-                            <li className="mb-4">{i}</li>
-                        </ul>
-                    ))}
+                        recipeDetails?.instructions?.map((i, index) => (
+                            <ul key={index}>
+                                <li className="mb-4">{i}</li>
+                            </ul>
+                        ))}
                 </div>
                 <div className="mt-20">
                     <h1 className="font-semibold text-2xl ">Comments ({recipeDetails?.comments?.length > 0 ? recipeDetails?.comments?.length : 0})</h1>
@@ -168,7 +146,7 @@ function RecipeDetails() {
                                     <p className='w-[200px]'>{item.comment}</p>
                                 </div>
                             </div>
-                            <div className="">
+                            <div>
                                 {item.postedBy?.userName === userDetails.userName  && <BsTrash/>}
                             </div>
                         </div>
@@ -204,12 +182,6 @@ function RecipeDetails() {
                     <div className="flex-1 pl-6 pr-10">
                     <h1 className="text-2xl font-semibold mb-4">Instructions</h1>
                         {
-                            instructions? 
-                            instructions?.map((i, idx) => (
-                            <ul key={idx}>
-                                <li className="mb-4">{i}</li>
-                            </ul>
-                        )):
                             recipeDetails?.instructions?.map((i, idx) => (
                             <ul key={idx}>
                                 <li className="mb-4">{i}</li>
@@ -218,15 +190,10 @@ function RecipeDetails() {
                     </div>
                     <div className=" flex-3 pl-6 pr-10">
                             <h1 className="text-2xl font-semibold mb-4">Ingredients</h1>
-                        {ingredients?
-                            ingredients?.map((i, index) => (
-                                <ul key={index}>
-                                    <li className="mb-4 w-[440px]">{i}</li>
-                                </ul>
-                            )):
+                        {
                             recipeDetails?.ingredients?.map((i, index) => (
-                                <ul key={i.ingredient}>
-                                    <li  className="mb-4 w-[440px]">{i.ingredient}</li>
+                                <ul key={index}>
+                                    <li  className="mb-4">{i}</li>
                                 </ul>
                             ))
                         }
@@ -241,7 +208,7 @@ function RecipeDetails() {
                     {recipeDetails?.comments?.map((item) => (
                         <div className="flex gap-6 pl-10 mb-10 items-center bg-white rounded-lg w-full" key={item._key}>
                             <img
-                                src={item.postedBy?.image}
+                                src={(item.postedBy?.image && urlFor(item.postedBy?.image).url())}
                                 className="h-12 rounded-full cursor-pointer"
                                 alt=""
                             />

@@ -12,6 +12,9 @@ export const searchQuery = (searchInput) => {
             }
             },
                 _id,
+                calories,
+                servings,
+                cookTime,
                 postedBy->{
                 _id,
                 userName,
@@ -35,6 +38,7 @@ export const feedQuery = `*[_type == "recipe"] | order(_createdAt desc) {
         title,
         calories,
         servings,
+        cookTime,
         postedBy->{
             _id,
             userName,
@@ -58,6 +62,7 @@ export const RecipeDetailsQuery = (recipeId) => {
         category,
         calories,
         servings,
+        cookTime,
         ingredients,
         instructions,
         postedBy->{
@@ -145,4 +150,3 @@ export const userSavedQuery = (userId) => {
     }`;
 	return query;
 };
-

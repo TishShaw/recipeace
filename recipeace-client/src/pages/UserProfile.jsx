@@ -46,7 +46,7 @@ const UserProfile = () => {
     const handleLogOut = (e) => {
         e.preventDefault();
         localStorage.removeItem('user')
-        navigate('/login')
+        navigate('/')
         window.location.reload()
     }
 
@@ -54,15 +54,14 @@ const UserProfile = () => {
         return <Spinner message="Loading user profile..."/>
     }
     return (
-        <div className='realtive pb-2 flex justify-center items-center'>
-            
-            <div className="flex flex-col pb-5">
+        <div className='realtive pb-2 flex justify-center items-center w-full'>
+            <div className="flex flex-col pb-5 w-full">
                 <div className="relative flex flex-col mb-7">
                     <div className="flex flex-col just-center items-center">
                         <img src={randomImage} className="w-full h-50 shadow-lg object-cover relative " alt='coverPhoto'/>
-                        <img src={(urlFor(image).url())} className=' absolute md:top-36 rounded-full object-cover w-20 h-20 shadow-xl sm:top-20 xl:h-[150px] xl:w-[150px]' alt='userImg'/>
+                        <img src={(urlFor(image).url())} className=' absolute md:top-36 rounded-full object-cover w-[90px] h-[90px] shadow-xl xs:top-12 md:w-[120px] md:h-[120px] lg:top-30 sm:top-20 lg:h-[130px] lg:w-[130px] xl:w-[150px]' alt='userImg'/>
                         <h1 className="font-bold text-[26px] text-center mt-14 sm:mt-10 xl:text-[32px]">{user?.userName}</h1>
-                        <div className="absolute top-0 z-1 right-0 p-2 mr-2 mt-2 bg-white rou nded-full flex items-center shadow hover:shadow-xl ">
+                        <div className="absolute top-0 z-1 right-0 p-2 mr-2 mt-2 bg-white rounded-full flex items-center shadow hover:shadow-xl">
                             <button className="text-red-500 text-xl sm:text-md" onClick={handleLogOut}><AiOutlineLogout/></button>
                         </div>
                     </div>
@@ -74,11 +73,11 @@ const UserProfile = () => {
                         <button onClick={(e) => {
                             setText('saved');
                             setActive('saved')
-                        }} className={`${active === 'saved'? activeBtnStyles : notActiveBtnStyles}`}>Saved</button>
-                        
+                        }} className={`${active === 'saved'? activeBtnStyles : notActiveBtnStyles}`}>Saved
+                        </button>
                     </div>
                     { recipes?.length ?
-                            <div className='px-2'>
+                            <div>
                                 <MasonryLayout recipes={recipes} />
                             </div> :
                             <div className="flex">No Recipes Found!</div>

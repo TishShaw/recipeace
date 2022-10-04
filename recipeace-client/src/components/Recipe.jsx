@@ -37,14 +37,14 @@ function Recipe({ recipe }) {
                 })
         }
     }
-
+console.log(recipe);
     return (
-        <div className='m-2   w-full flex justify-center items-center' 
+        <div className='flex justify-center items-center m-2' 
             onMouseEnter={() => setOnHover(true)}
             onMouseLeave={() => setOnHover(false)}
             onClick={() => navigate(`/recipe-details/${_id}`)}>
-                <div className='border m-2 rounded-lg relative  hover:scale-105 sm:w-full'>
-                    <img src={(urlFor(image).url())} className='rounded-lg sm:w-full w-[100px] md:w-[300px]' alt="recipe_image"/>
+                <div className='border m-2 rounded-lg relative  hover:scale-105 sm:w-full xxl:w-[500px] xl:w-[400px] lg:w-[350px]'>
+                    <img src={(urlFor(image).url())} className='rounded-lg sm:w-full w-[100px] md:w-[300px] xs:w-full' alt="recipe_image"/>
 
                     {alreadySaved? <BsFillBookmarkFill className='absolute top-0 right-0 m-2 text-2xl text-gray-700 cursor-pointer'/> : <FiBookmark className='absolute top-0 right-0 m-2 text-2xl text-gray-700 cursor-pointer' onClick={(e) => {
                         e.stopPropagation();
