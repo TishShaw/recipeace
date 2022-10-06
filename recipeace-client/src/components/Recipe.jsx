@@ -37,7 +37,7 @@ function Recipe({ recipe }) {
                 })
         }
     }
-console.log(recipe);
+
     return (
         <div className='flex justify-center items-center m-2' 
             onMouseEnter={() => setOnHover(true)}

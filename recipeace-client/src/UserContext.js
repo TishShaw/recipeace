@@ -10,6 +10,7 @@ export const UserProvider = ({ children }) => {
 		}, [user]);
 
     const [userDetails, setUserDetails] = useState(user);
+    
 
     return (
         <UserContext.Provider value={{userDetails}}>

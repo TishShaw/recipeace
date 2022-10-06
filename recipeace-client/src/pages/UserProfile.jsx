@@ -4,7 +4,7 @@ import {client} from '../client';
 import { AiOutlineLogout } from 'react-icons/ai';
 import Spinner from '../components/Spinner';
 import MasonryLayout from '../components/MasonryLayout';
-import { userQuery, userCreatedQuery, userSavedQuery } from '../utils/data';
+import { userQuery, userCreatedQuery, userSavedQuery} from '../utils/data'; 
 
 import { urlFor } from '../client';
 
@@ -22,12 +22,10 @@ const UserProfile = () => {
     const navigate = useNavigate();
     const id = useParams();
     const userId = id.id;
-    console.log(userId)
-
+    
     useEffect(() => {
         const query = userQuery(userId)
         client.fetch(query).then((data) =>{
-            console.log(data);
             setUser(data[0])
         } )
 
@@ -59,7 +57,7 @@ const UserProfile = () => {
                 <div className="relative flex flex-col mb-7">
                     <div className="flex flex-col just-center items-center">
                         <img src={randomImage} className="w-full h-50 shadow-lg object-cover relative " alt='coverPhoto'/>
-                        <img src={(urlFor(image).url())} className=' absolute md:top-36 rounded-full object-cover w-[90px] h-[90px] shadow-xl xs:top-12 md:w-[120px] md:h-[120px] lg:top-30 sm:top-20 lg:h-[130px] lg:w-[130px] xl:w-[150px]' alt='userImg'/>
+                        <img src={image?.asset?._ref ? (urlFor(image).url()) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT75n1LQI0BSnggENQz554GEkiD5DgoaBztVHcLOdmPmgbX9GMznoAdJ6FerzduRy5s5yk&usqp=CAU'} className=' absolute md:top-36 rounded-full object-cover w-[90px] h-[90px] shadow-xl xs:top-12 md:w-[120px] md:h-[120px] lg:top-30 sm:top-20 lg:h-[130px] lg:w-[130px] xl:w-[150px]' alt='userImg'/>
                         <h1 className="font-bold text-[26px] text-center mt-14 sm:mt-10 xl:text-[32px]">{user?.userName}</h1>
                         <div className="absolute top-0 z-1 right-0 p-2 mr-2 mt-2 bg-white rounded-full flex items-center shadow hover:shadow-xl">
                             <button className="text-red-500 text-xl sm:text-md" onClick={handleLogOut}><AiOutlineLogout/></button>

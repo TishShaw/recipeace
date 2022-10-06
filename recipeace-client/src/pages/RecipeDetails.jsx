@@ -67,7 +67,6 @@ function RecipeDetails() {
         }
     }
 
-
     const handleDelete = async (id) => {
         try {
             let res = await client
@@ -84,8 +83,6 @@ function RecipeDetails() {
         fetchRecipeDetails(recipeId)
             window.scrollTo(0, 0)
     }, [recipeId])
-
-    console.log(recipeDetails)
 
     if(!recipeDetails && !userDetails) {
         return <Spinner message="Loading recipe details..." />
@@ -104,7 +101,7 @@ function RecipeDetails() {
                     <p className="flex items-center text-l mr-4 border p-2 rounded-lg shadow"><HiOutlineUsers/>{recipeDetails?.servings} Servings</p>
                     <p className="flex items-center text-l mr-4 border p-2 rounded-lg shadow"><ImSpoonKnife/>{recipeDetails?.calories} Calories</p>
                     <p className="flex items-center text-l mr-4 border p-2 rounded-lg shadow"><FiClock/>{recipeDetails?.cookTime} Minutes</p>
-                    <p className="flex items-center text-l mr-4 border p-2 rounded-lg shadow"><FiBookmark/> Save</p>
+                    <p className="flex items-center text-l mr-4 border p-2 rounded-lg shadow" onClick={''}><FiBookmark/> Save</p>
                 </div>
                 <div className="mt-6">
                     <h1 className="text-xl font-semibold mb-4 w-full">Ingredients</h1>
